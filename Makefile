@@ -12,7 +12,7 @@ clean:
 
 release: clean
 	mkdir -p dist
-	cp ecs-proxies-deploy dist/ecs-deploy-internal-dev.yml
+	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-dev.yml
 
 check-licenses:
 	@echo "Not configured"
