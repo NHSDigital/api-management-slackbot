@@ -19,3 +19,6 @@ check-licenses:
 
 lint:
 	@echo "Not configured"
+
+publish:
+	@echo "Not configured"
