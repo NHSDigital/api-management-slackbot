@@ -20,6 +20,7 @@ const botResponses = {
 
 const app = express();
 
+app.get('/_health', (req, res) => { res.status(200) });
 app.use('/slack/events', slackEvents.requestListener());
 
 slackEvents.on('message', async (event) => {
