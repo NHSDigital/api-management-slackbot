@@ -1,0 +1,4 @@
+<APIProxy name="sba">
+  <!-- This is the root of the application -->
+  <Description>Proxy to API Management slackbot endpoints.</Description>
+</APIProxy>
