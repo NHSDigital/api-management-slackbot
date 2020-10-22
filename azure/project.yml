@@ -1,0 +1,6 @@
+variables:
+  service_name: slackbot
+  short_service_name: slackbot
+  service_base_path: slackbot
+  product_display_name: API Management Slack Bot
+  product_description: Placeholder description
