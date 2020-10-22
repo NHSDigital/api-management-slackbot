@@ -39,4 +39,4 @@ Within the hosted appliction the following environment variables must be set usi
 
 - SLACK_SIGNING_SECRET - Signing Secret found on the Basic Information tab.
 - SLACK_BOT_TOKEN - Bot User OAuth Access Token (starting with 'xoxb') found on the OAuth & Permissions tab.
-- SLACK_MESSAGE_LIMIT - Limited number of messages fetched to determine if the user has recently posted a message in the channel. Max number is 100.
+- SLACK_MESSAGE_LIMIT - Limited number of messages fetched to determine if the user has recently posted a message in the channel. The max number is 100.
