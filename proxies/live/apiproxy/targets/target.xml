@@ -1,0 +1,21 @@
+<TargetEndpoint name="target">
+  <PreFlow>
+    <Request>
+      <Step>
+        <Name>Quota</Name>
+      </Step>
+      <Step>
+        <Name>SpikeArrest</Name>
+      </Step>
+    </Request>
+  </PreFlow>
+  <HTTPTargetConnection>
+    <Properties>
+      <Property name="success.codes">1xx,2xx,3xx,4xx</Property>
+    </Properties>
+    <SSLInfo>
+      <Enabled>true</Enabled>
+    </SSLInfo>
+    <URL>https://{{ APIM_PROXY_HOSTNAME }}</URL>
+  </HTTPTargetConnection>
+</TargetEndpoint>
