@@ -22,7 +22,7 @@
     </Flows>
     <PreFlow/>
     <HTTPProxyConnection>
-        <BasePath>{% raw %}{{ SERVICE_BASE_PATH }}{% endraw %}</BasePath>
+        <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     <RouteRule name="NoRoute">
