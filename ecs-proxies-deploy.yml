@@ -9,6 +9,6 @@ docker_service:
         value: 10
     secrets:
       - name: SLACK_SIGNING_SECRET
-        valueFrom: "<placeholder>"
+        valueFrom: "ptl/api-deployment/slackbot/SLACK_SIGNING_SECRET"
       - name: SLACK_BOT_TOKEN
-      - valueFrom: "<placeholder>"
+      - valueFrom: "ptl/api-deployment/slackbot/SLACK_BOT_TOKEN"
