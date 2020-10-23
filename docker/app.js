@@ -6,7 +6,7 @@ const { App, LogLevel } = require("@slack/bolt");
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const token = process.env.SLACK_BOT_TOKEN;
-const messageLimit = process.env.SLACK_MESSAGE_LIMIT || 10;
+const messageLimit = process.env.SLACK_MESSAGE_LIMIT || 100;
 const slackEvents = createEventAdapter(slackSigningSecret);
 
 const bot = new App({

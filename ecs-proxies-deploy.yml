@@ -4,3 +4,11 @@ docker_service:
     health_check:
       matcher: "200"
       path: "/_health"
+    environment:
+      - name: SLACK_MESSAGE_LIMIT
+        value: 10
+    secrets:
+      - name: SLACK_SIGNING_SECRET
+        valueFrom: "ptl/api-deployment/slackbot/SLACK_SIGNING_SECRET"
+      - name: SLACK_BOT_TOKEN
+      - valueFrom: "ptl/api-deployment/slackbot/SLACK_BOT_TOKEN"
