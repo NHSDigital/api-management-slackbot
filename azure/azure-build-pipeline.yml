@@ -10,7 +10,7 @@ trigger:
 
 pr:
   branches:
-    include: ['*']
+    include: ["*"]
 
 resources:
   repositories:
@@ -27,3 +27,4 @@ extends:
   parameters:
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
+    notify: true
