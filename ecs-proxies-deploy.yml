@@ -11,4 +11,4 @@ docker_service:
       - name: SLACK_SIGNING_SECRET
         valueFrom: "/ptl/api-deployment/slackbot/SLACK_SIGNING_SECRET"
       - name: SLACK_BOT_TOKEN
-      - valueFrom: "/ptl/api-deployment/slackbot/SLACK_BOT_TOKEN"
+        valueFrom: "/ptl/api-deployment/slackbot/SLACK_BOT_TOKEN"
