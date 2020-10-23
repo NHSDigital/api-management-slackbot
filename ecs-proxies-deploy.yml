@@ -6,7 +6,7 @@ docker_service:
       path: "/_health"
     environment:
       - name: SLACK_MESSAGE_LIMIT
-        value: 10
+        value: "10"
     secrets:
       - name: SLACK_SIGNING_SECRET
         valueFrom: "/ptl/api-deployment/slackbot/SLACK_SIGNING_SECRET"
