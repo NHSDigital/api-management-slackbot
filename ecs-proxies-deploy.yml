@@ -6,7 +6,7 @@ docker_service:
       path: "/_health"
     environment:
       - name: SLACK_MESSAGE_LIMIT
-        value: "10"
+        value: "100"
       - name: NODE_ENV
         value: "production"
     secrets:
