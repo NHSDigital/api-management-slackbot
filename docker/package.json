@@ -25,10 +25,8 @@
     "axios": "^0.20.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "hubot-heroku-keepalive": "^1.0.3",
     "node-slack-upload": "^2.0.0",
-    "slackbots": "^1.2.0",
-    "supertest": "^5.0.0"
+    "slackbots": "^1.2.0"
   },
   "engines": {
     "node": "13.11.0"
