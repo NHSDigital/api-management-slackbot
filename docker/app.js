@@ -26,8 +26,8 @@ app.use('/slack/events', slackEvents.requestListener());
 
 slackEvents.on('message', async (event) => {
   try {
-    const { user, channel, text } = event;
-    const isThread = event.thread_ts
+    const { user, channel } = event;
+    const isThread = event.thread_ts;
 
     const result = await bot.client.conversations.history({
       token,
@@ -49,7 +49,7 @@ slackEvents.on('message', async (event) => {
       await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(ephParams));
     };
 
-  } catch (event) {console.error(event)}
+  } catch (event) {console.error(event)};
 });
 
 slackEvents.on('error', (error) => {
