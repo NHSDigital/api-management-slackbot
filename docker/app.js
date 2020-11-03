@@ -40,7 +40,7 @@ slackEvents.on('message', async (event) => {
       return histMessage.user === user && index !== 0;
     });
 
-    if (!recentSender && !isThread) {
+    if (!recentSender) {
       const ephParams = {
         token,
         channel,
