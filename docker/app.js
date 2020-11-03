@@ -28,21 +28,17 @@ slackEvents.on('message', async (event) => {
   try {
     const { user, channel } = event;
     const isThread = event.thread_ts;
+    if (isThread) return
 
-    let result;
-    let conversationHistory;
-    let recentSender;
-    if (!isThread) {
-      result = await bot.client.conversations.history({
-        token,
-        channel,
-        limit: messageLimit
-      });
-      conversationHistory = result.messages;
-      recentSender = conversationHistory.some((histMessage, index) => {
-        return histMessage.user === user && index !== 0;
-      });
-    };
+    const result = await bot.client.conversations.history({
+      token,
+      channel,
+      limit: messageLimit
+    });
+    const conversationHistory = result.messages;    
+    const recentSender = conversationHistory.some((histMessage, index) => {
+      return histMessage.user === user && index !== 0;
+    });
 
     if (!recentSender && !isThread) {
       const ephParams = {
