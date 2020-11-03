@@ -16,7 +16,7 @@ const bot = new App({
 });
 
 const botResponses = {
-    generic: "Hi there and thanks for your message. We'll get back to you as soon as we can but you might also find an answer in our <https://nhsd-confluence.digital.nhs.uk/display/APM/API+producer+zone|*API producer zone*>."
+    generic: "Hi there and thanks for your message. Can you please confirm that you have already looked for an answer to your question in our <https://nhsd-confluence.digital.nhs.uk/display/APM/API+producer+zone|*API producer zone*> by writing \"I have have already looked for an answer to my question in the API producer zone.\" as a reply to your own question. Thanks."
 };
 
 const app = express();
