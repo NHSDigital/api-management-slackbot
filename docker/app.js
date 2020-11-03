@@ -16,7 +16,7 @@ const bot = new App({
 });
 
 const botResponses = {
-    generic: "Hi there and thanks for your message. We'll get back to you as soon as we can but you might also find an answer in our <https://nhsd-confluence.digital.nhs.uk/display/APM/API+producer+zone|*API producer zone*>."
+    generic: "Hi there and thanks for your message. Can you please confirm that you have already looked for an answer to your question in our <https://nhsd-confluence.digital.nhs.uk/display/APM/API+producer+zone|*API producer zone*> by writing \"I have have already looked for an answer to my question in the API producer zone.\" as a reply to your own question. Thanks."
 };
 
 const app = express();
@@ -26,17 +26,16 @@ app.use('/slack/events', slackEvents.requestListener());
 
 slackEvents.on('message', async (event) => {
   try {
-    const { user, channel, text } = event;
-    console.log(`Received a message event: user ${user} in channel ${channel} says ${text}`);
+    const { user, channel } = event;
+    const isThread = event.thread_ts;
+    if (isThread) return
 
     const result = await bot.client.conversations.history({
       token,
       channel,
       limit: messageLimit
     });
-
     const conversationHistory = result.messages;    
-
     const recentSender = conversationHistory.some((histMessage, index) => {
       return histMessage.user === user && index !== 0;
     });
@@ -51,7 +50,7 @@ slackEvents.on('message', async (event) => {
       await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(ephParams));
     };
 
-  } catch (event) {console.error(event)}
+  } catch (event) {console.error(event)};
 });
 
 slackEvents.on('error', (error) => {
