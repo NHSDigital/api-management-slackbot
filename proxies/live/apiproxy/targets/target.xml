@@ -13,9 +13,6 @@
     <Properties>
       <Property name="success.codes">1xx,2xx,3xx,4xx</Property>
     </Properties>
-    <SSLInfo>
-      <Enabled>true</Enabled>
-    </SSLInfo>
-    <URL>https://{{ APIM_PROXY_HOSTNAME }}</URL>
+    {{ HOSTED_TARGET_CONNECTION }}
   </HTTPTargetConnection>
 </TargetEndpoint>
