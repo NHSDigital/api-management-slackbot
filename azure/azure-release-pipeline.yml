@@ -36,3 +36,4 @@ extends:
     ping: false
     apigee_deployments:
       - environment: internal-dev
+      - environment: prod
