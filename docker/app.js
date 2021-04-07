@@ -16,7 +16,8 @@ const bot = new App({
 });
 
 const botResponses = {
-    generic: "Hi there and thanks for your message. Can you please confirm that you have already looked for an answer to your question in our <https://nhsd-confluence.digital.nhs.uk/display/APM/API+producer+zone|*API producer zone*> by writing \"I have have already looked for an answer to my question in the API producer zone.\" as a reply to your own question. Thanks."
+    generic: "Hi there and thanks for your message. Can you please confirm that you have already looked for an answer to your question in our <https://nhsd-confluence.digital.nhs.uk/display/APM/API+producer+zone|*API producer zone*> by writing \"I have have already looked for an answer to my question in the API producer zone.\" as a reply to your own question. Thanks.",
+    test: "This is a test message."
 };
 
 const app = express();
@@ -40,11 +41,11 @@ slackEvents.on('message', async (event) => {
       return histMessage.user === user && index !== 0;
     });
 
-    if (!recentSender) {
+    if (recentSender) {
       const ephParams = {
         token,
         channel,
-        text: botResponses.generic,
+        text: botResponses.test,
         user
       };
       await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(ephParams));
