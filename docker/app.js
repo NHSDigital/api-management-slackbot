@@ -3,7 +3,8 @@ const axios = require("axios");
 const cors = require("cors");
 const qs = require("qs");
 const { createEventAdapter } = require('@slack/events-api');
-const { App, LogLevel } = require("@slack/bolt");
+const { WebClient } = require('@slack/web-api');
+// const { App, LogLevel } = require("@slack/bolt");
 
 // require('dotenv').config()
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
@@ -11,11 +12,12 @@ const token = process.env.SLACK_BOT_TOKEN;
 const messageLimit = process.env.SLACK_MESSAGE_LIMIT || 100;
 const slackEvents = createEventAdapter(slackSigningSecret);
 
-const bot = new App({
-  token,
-  signingSecret: slackSigningSecret,
-  logLevel: LogLevel.DEBUG
-});
+// const bot = new App({
+//   token,
+//   signingSecret: slackSigningSecret,
+//   logLevel: LogLevel.DEBUG
+// });
+const bot = new WebClient(token);
 
 const botResponses = {
     docsReminder: 'Hi there and thanks for your message. Can you please confirm that you have already looked for an answer to your question in our <https://nhsd-confluence.digital.nhs.uk/display/APM/API+producer+zone|*API producer zone*> by writing "I have have already looked for an answer to my question in the API producer zone." as a reply to your own question. Thanks.',
