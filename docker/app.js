@@ -1,9 +1,11 @@
 const express = require('express');
 const axios = require("axios");
+const cors = require("cors");
 const qs = require("qs");
 const { createEventAdapter } = require('@slack/events-api');
 const { App, LogLevel } = require("@slack/bolt");
 
+// require('dotenv').config()
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const token = process.env.SLACK_BOT_TOKEN;
 const messageLimit = process.env.SLACK_MESSAGE_LIMIT || 100;
@@ -21,12 +23,14 @@ const botResponses = {
 };
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
-app.get('/_health', (req, res) => { res.send("OK") });
-app.use('/slack/events', slackEvents.requestListener());
+app.get('/_health', (req, res) => { res.send({ msg:"OK" }) });
+app.use('/slack/events', slackEvents.expressMiddleware());
+
 
 slackEvents.on('message', async (event) => {
-  try {
     const { user, channel, text } = event;
     
     // SLACK INVITE REMINDER
@@ -44,8 +48,11 @@ slackEvents.on('message', async (event) => {
         text: botResponses.slackInvite,
         user
       };
-      await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(slackRequestParams));
-      return;
+      try {
+        await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(slackRequestParams));
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     // GENERIC DOCS REMINDER
@@ -69,11 +76,12 @@ slackEvents.on('message', async (event) => {
         text: botResponses.docsReminder,
         user
       };
-      await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(docsReminderParams));
-      return;
+      try {
+        await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(docsReminderParams));
+      } catch (error) {
+        console.log(error);
+      }
     };
-
-  } catch (event) {console.error(event)};
 });
 
 slackEvents.on('error', (error) => {
