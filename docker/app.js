@@ -45,11 +45,12 @@ slackEvents.on('message', async (event) => {
         user
       };
       await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(slackRequestParams));
+      return;
     };
 
     // GENERIC DOCS REMINDER
     const isThread = event.thread_ts;
-    if (isThread) return
+    if (isThread) return;
 
     const result = await bot.client.conversations.history({
       token,
@@ -69,6 +70,7 @@ slackEvents.on('message', async (event) => {
         user
       };
       await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(docsReminderParams));
+      return;
     };
 
   } catch (event) {console.error(event)};
