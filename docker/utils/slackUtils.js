@@ -1,8 +1,10 @@
 const axios = require("axios");
 const qs = require("qs");
+const { WebClient } = require('@slack/web-api');
 
 const slackInviteReminder = async (slackConfig) => {
     const { token, channel, user, text } = slackConfig;
+    
     const formatText = text.toLowerCase();
     const keyWordsOne = ['channel', 'workspace', 'slack'];
     const keyWordsTwo = ['added', 'add', '@nhs.net'];
@@ -28,6 +30,40 @@ const slackInviteReminder = async (slackConfig) => {
     };
 };
 
-const generalDocsReminder = () => {};
+const generalDocsReminder = async (slackConfig) => {
+    const { token, channel, user, thread_ts } = slackConfig;
+    const messageLimit = process.env.SLACK_MESSAGE_LIMIT || 50;
+
+    if (thread_ts) return;
+
+    const bot = new WebClient(token);
+
+    const result = await bot.conversations.history({
+      token,
+      channel,
+      limit: messageLimit
+    });
+    const conversationHistory = result.messages;    
+    const recentSender = conversationHistory.some((histMessage, index) => {
+      return histMessage.user === user && index !== 0;
+    });
+
+    if (!recentSender) {
+        const docsReminderResp = 'Hi there and thanks for your message. Can you please confirm that you have already looked for an answer to your question in our <https://nhsd-confluence.digital.nhs.uk/display/APM/API+producer+zone|*API producer zone*> by writing "I have have already looked for an answer to my question in the API producer zone." as a reply to your own question. Thanks.';
+        
+        const docsReminderParams = {
+            token,
+            channel,
+            text: docsReminderResp,
+            user
+        };
+
+        try {
+            await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(docsReminderParams));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
 
 module.exports = { slackInviteReminder, generalDocsReminder };
