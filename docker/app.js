@@ -1,22 +1,12 @@
 const express = require('express');
 const axios = require("axios");
-const cors = require("cors");
 const qs = require("qs");
 const { createEventAdapter } = require('@slack/events-api');
 const { WebClient } = require('@slack/web-api');
-// const { App, LogLevel } = require("@slack/bolt");
-
-// require('dotenv').config()
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const token = process.env.SLACK_BOT_TOKEN;
 const messageLimit = process.env.SLACK_MESSAGE_LIMIT || 100;
 const slackEvents = createEventAdapter(slackSigningSecret);
-
-// const bot = new App({
-//   token,
-//   signingSecret: slackSigningSecret,
-//   logLevel: LogLevel.DEBUG
-// });
 const bot = new WebClient(token);
 
 const botResponses = {
@@ -25,11 +15,9 @@ const botResponses = {
 };
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
 app.get('/_health', (req, res) => { res.send({ msg:"OK" }) });
-app.use('/slack/events', slackEvents.expressMiddleware());
+app.use('/slack/events', slackEvents.requestListener());
 
 
 slackEvents.on('message', async (event) => {
@@ -61,7 +49,7 @@ slackEvents.on('message', async (event) => {
     const isThread = event.thread_ts;
     if (isThread) return;
 
-    const result = await bot.client.conversations.history({
+    const result = await bot.conversations.history({
       token,
       channel,
       limit: messageLimit
