@@ -24,7 +24,8 @@ const slackInviteReminder = async (slackConfig) => {
         };
 
         try {
-            const resp = await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(slackRequestParams));
+            console.log(slackRequestParams);
+            const resp = await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(slackRequestParams), {proxy: false});
             console.log('Slack invite post resp - ', resp);
         } catch (error) {
             console.log(error);
