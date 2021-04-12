@@ -1,10 +1,17 @@
 const app = require('express')();
 const { createEventAdapter } = require('@slack/events-api');
+require('dotenv').config()
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const token = process.env.SLACK_BOT_TOKEN;
 const slackEvents = createEventAdapter(slackSigningSecret);
-const { WebClient } = require('@slack/web-api');
-const bot = new WebClient(token);
+// const { WebClient } = require('@slack/web-api');
+// const bot = new WebClient(token);
+const { App, LogLevel } = require('@slack/bolt');
+const bot = new App({
+  token,
+  signingSecret: slackSigningSecret,
+  logLevel: LogLevel.DEBUG
+});
 const { slackInviteReminder, generalDocsReminder } = require('./utils/slackUtils');
 
 app.get('/_health', (req, res) => { res.send({ msg:"OK" }) });
