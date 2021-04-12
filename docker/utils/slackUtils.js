@@ -38,7 +38,7 @@ const generalDocsReminder = async (slackConfig) => {
 
     if (thread_ts) return;
 
-    const result = await bot.conversations.history({
+    const result = await bot.client.conversations.history({
       token,
       channel,
       limit: messageLimit
