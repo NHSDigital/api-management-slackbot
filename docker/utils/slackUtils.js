@@ -1,6 +1,5 @@
 const axios = require("axios");
 const qs = require("qs");
-const { WebClient } = require('@slack/web-api');
 
 const slackInviteReminder = async (slackConfig) => {
     const { token, channel, user, text } = slackConfig;
@@ -15,6 +14,8 @@ const slackInviteReminder = async (slackConfig) => {
     if (isSlackRequest) {
         const slackInviteResp = 'Hi there. It looks like you\'re making a Slack Invitation request? If so please use the shortcut on this channel by clicking the lightening bolt and selecting \'Slack Invite Request\'. Please also reply to your message to let us know you\'ve seen this. Thanks.'
 
+        console.log('isSlackRequest');
+
         const slackRequestParams = {
             token,
             channel,
@@ -23,7 +24,8 @@ const slackInviteReminder = async (slackConfig) => {
         };
 
         try {
-            await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(slackRequestParams));
+            const resp = await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(slackRequestParams));
+            console.log('Slack invite post resp - ', resp);
         } catch (error) {
             console.log(error);
         }
@@ -31,12 +33,10 @@ const slackInviteReminder = async (slackConfig) => {
 };
 
 const generalDocsReminder = async (slackConfig) => {
-    const { token, channel, user, thread_ts } = slackConfig;
+    const { token, channel, user, thread_ts, bot } = slackConfig;
     const messageLimit = process.env.SLACK_MESSAGE_LIMIT || 50;
 
     if (thread_ts) return;
-
-    const bot = new WebClient(token);
 
     const result = await bot.conversations.history({
       token,
@@ -51,6 +51,8 @@ const generalDocsReminder = async (slackConfig) => {
     if (!recentSender) {
         const docsReminderResp = 'Hi there and thanks for your message. Can you please confirm that you have already looked for an answer to your question in our <https://nhsd-confluence.digital.nhs.uk/display/APM/API+producer+zone|*API producer zone*> by writing "I have have already looked for an answer to my question in the API producer zone." as a reply to your own question. Thanks.';
         
+        console.log('Not recent sender');
+
         const docsReminderParams = {
             token,
             channel,
@@ -59,7 +61,8 @@ const generalDocsReminder = async (slackConfig) => {
         };
 
         try {
-            await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(docsReminderParams));
+            const resp = await axios.post("https://slack.com/api/chat.postEphemeral", qs.stringify(docsReminderParams));
+            console.log('Docs reminder post resp -', resp)
         } catch (error) {
             console.log(error);
         }
