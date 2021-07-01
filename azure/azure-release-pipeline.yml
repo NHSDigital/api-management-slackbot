@@ -34,5 +34,6 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     ping: false
+    enable_status_monitoring: false
     apigee_deployments:
       - environment: internal-dev
