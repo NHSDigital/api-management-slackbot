@@ -26,4 +26,4 @@ keywords = ["healthcare", "uk", "nhs", "demographics"]
 [tool.poetry.dependencies]
 python = "^3.8"
 semver = "^2.10.2"
-gitpython = "^3.1.8"
+gitpython = "^3.1.32"
